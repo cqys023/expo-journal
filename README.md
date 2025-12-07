@@ -1,2 +1,2 @@
-# expo-journal
-## 本程序搭建说明
+## expo-journal
+# 本程序搭建说明
