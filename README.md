@@ -30,8 +30,8 @@ GitHub 仓库中包含 3 个文件：
 
 其中：
 
-- **index.js** → Worker 部署使用  
-- **info.sql / data.sql** → 需在 Cloudflare D1 中分别创建数据库并导入数据
+- **bk-worker.js** → Worker 部署使用代码文件  
+- **bk_info.sql / bk_years.sql** → 需在 Cloudflare D1 中分别创建数据库并导入数据
 
 ---
 
@@ -47,17 +47,17 @@ GitHub 仓库中包含 3 个文件：
 2. **点亮 Star 支持作者**  
 3. 可选择 Fork 项目到自己的仓库  
 4. 下载两个 SQL 文件：  
-   - `info.sql`  
-   - `data.sql`  
-5. `index.js` 无需下载，稍后在 Cloudflare 里直接复制粘贴即可
+   - `bk_info.sql.sql`  
+   - `bk_years.sql`  
+5. `bk-worker.js` 可不用下载，稍后在 Cloudflare 里直接复制粘贴即可
 
 ---
 
 ### 2️⃣ 创建 Cloudflare 账号（如无跳过）
 
-1. 访问 Cloudflare 官网  
-2. 使用邮箱注册一个 **免费账号**  
-3. 登录进入 Cloudflare 控制台
+1. 访问 **[Cloudflare](https://dash.cloudflare.com/)**官网  
+2. 使用邮箱免费注册账号   
+3. 登录账号进入 Cloudflare 控制台
 
 ---
 
@@ -66,8 +66,8 @@ GitHub 仓库中包含 3 个文件：
 1. 左侧导航选择：**存储和数据库 → D1 数据库**  
 2. 点击右上角 **创建数据库**  
 3. 数据库名称建议与 SQL 文件保持一致，如：  
-   - `info`  
-   - `data`
+   - `bk_info`  
+   - `bk_years`
 
 ---
 
@@ -75,17 +75,17 @@ GitHub 仓库中包含 3 个文件：
 
 1. 在 D1 数据库列表中选择创建好的数据库  
 2. 点击 **控制台**  
-3. 打开本地 `info.sql`  
+3. 打开本地 `bk_info.sql`  
 4. 将 SQL 文件中的数据分段复制粘贴到控制台执行  
 
 ⚠️ 注意事项：
 
-- 数据量较大，可能需要 **分批复制执行**  
-- 每一段都必须保留 `INSERT` 语句  
-- 每次分段的末尾 **逗号必须改为英文引号 `" "`**  
+- 数据库内数据量较大，可能需要分批复制执行
+- 每一段都必须保留 `INSERT INTO ******* VALUES ` 这行语句  
+- 每次分段的末尾逗号 **,** 必须改为英文引号**;** 
 - 执行成功会输出成功提示  
 
-完成 `info.sql` 后，用同样方式导入 `data.sql`。
+完成 `bk_info.sql` 数据导入后，用同样方式导入 `bk_years.sql`的数据。
 
 ---
 
@@ -96,7 +96,7 @@ GitHub 仓库中包含 3 个文件：
 3. 选择 **从 Hello World 开始**  
 4. Worker 名称可随意填写  
 5. 创建后选择 **编辑代码**  
-6. 回到 GitHub 仓库打开 `index.js`  
+6. 回到 GitHub 仓库打开 `bk-worker.js`  
 7. 将全部代码复制 → 粘贴到 Cloudflare Worker 界面  
 8. 点击右上角 **部署**
 
@@ -108,8 +108,8 @@ GitHub 仓库中包含 3 个文件：
 2. 新建绑定：  
    - 类型选择 **D1 Database**  
    - 变量名建议与数据库名一致，如：  
-     - `INFO`  
-     - `DATA`  
+     - `bk_info`  
+     - `bk_years`  
    - 选择对应的数据库实例  
 
 绑定完成后再次部署即可。
