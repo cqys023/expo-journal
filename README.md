@@ -55,7 +55,7 @@ GitHub 仓库中包含 3 个文件：
 
 ### 2️⃣ 创建 Cloudflare 账号（如无跳过）
 
-1. 访问 **[Cloudflare](https://dash.cloudflare.com/)**官网  
+1. 访问 ** [Cloudflare](https://dash.cloudflare.com/) **官网  
 2. 使用邮箱免费注册账号   
 3. 登录账号进入 Cloudflare 控制台
 
