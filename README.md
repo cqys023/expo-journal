@@ -5,7 +5,8 @@
 
 示例站点（教程中的演示效果） **[博览期刊示例网站](https://bk.feifanlib.fun/)**。
 
-本源码搭建视频教程： **[利用cloudflare免费搭建一个期刊、杂志网站！（YouTube）](https://www.youtube.com/watch?v=d5QXvlYiu2s)**。
+本源码搭建视频教程 **[利用cloudflare免费搭建一个期刊、杂志网站！](https://www.youtube.com/watch?v=d5QXvlYiu2s)**。
+
 ---
 
 ## ✨ 网站功能介绍
