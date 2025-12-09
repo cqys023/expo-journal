@@ -46,7 +46,7 @@ GitHub 仓库中包含 3 个文件：
 ### 1️⃣ 克隆仓库并准备 SQL 文件
 
 1. 打开 GitHub 仓库  
-2. **点亮 Star 支持作者**  
+2. **点亮 Starred 支持作者**  
 3. 可选择 Fork 项目到自己的仓库  
 4. 下载两个 SQL 文件：  
    - `bk_info.sql.sql`  
@@ -57,7 +57,7 @@ GitHub 仓库中包含 3 个文件：
 
 ### 2️⃣ 创建 Cloudflare 账号（如无跳过）
 
-1. 访问**[Cloudflare](https://dash.cloudflare.com/)**官网  
+1. 访问 **[Cloudflare](https://dash.cloudflare.com/)** 官网  
 2. 使用邮箱免费注册账号   
 3. 登录账号进入 Cloudflare 控制台
 
