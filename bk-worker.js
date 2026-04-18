@@ -3,33 +3,57 @@ export default {
     const url = new URL(request.url);
 
     if (url.pathname === "/api/getResourcesWithCover") {
-      try {
-        const page = parseInt(url.searchParams.get("page") || "1");
-        const pageSize = 50; // 5列 x 10行
-        const offset = (page - 1) * pageSize;
+  try {
+    const page = parseInt(url.searchParams.get("page") || "1");
+    const keyword = url.searchParams.get("keyword") || "";
+    const pageSize = 50;
+    const offset = (page - 1) * pageSize;
 
-        const totalResult = await env.bk_info
-          .prepare("SELECT COUNT(*) as total FROM bk_info")
-          .first();
-        const total = totalResult.total;
+    let total = 0;
+    let results = [];
 
-        const { results } = await env.bk_info
-          .prepare("SELECT resourceId, resourceName FROM bk_info ORDER BY rowid LIMIT ? OFFSET ?")
-          .bind(pageSize, offset)
-          .all();
+    if (keyword) {
+      const totalResult = await env.bk_info
+        .prepare("SELECT COUNT(*) as total FROM bk_info WHERE resourceName LIKE ?")
+        .bind(`%${keyword}%`)
+        .first();
 
-        const resources = results.map(r => ({ ...r }));
-        return new Response(JSON.stringify({
-          resources,
-          total,
-          totalPages: Math.ceil(total / pageSize)
-        }, null, 2), {
-          headers: { "Content-Type": "application/json" },
-        });
-      } catch (err) {
-        return new Response("Database error: " + err.message, { status: 500 });
-      }
+      total = totalResult.total;
+
+      const res = await env.bk_info
+        .prepare("SELECT resourceId, resourceName FROM bk_info WHERE resourceName LIKE ? ORDER BY rowid LIMIT ? OFFSET ?")
+        .bind(`%${keyword}%`, pageSize, offset)
+        .all();
+
+      results = res.results;
+
+    } else {
+      const totalResult = await env.bk_info
+        .prepare("SELECT COUNT(*) as total FROM bk_info")
+        .first();
+
+      total = totalResult.total;
+
+      const res = await env.bk_info
+        .prepare("SELECT resourceId, resourceName FROM bk_info ORDER BY rowid LIMIT ? OFFSET ?")
+        .bind(pageSize, offset)
+        .all();
+
+      results = res.results;
     }
+
+    return new Response(JSON.stringify({
+      resources: results,
+      total,
+      totalPages: Math.ceil(total / pageSize)
+    }, null, 2), {
+      headers: { "Content-Type": "application/json" },
+    });
+
+  } catch (err) {
+    return new Response("Database error: " + err.message, { status: 500 });
+  }
+}
 
     if (url.pathname === "/api/getYears") {
       const rid = url.searchParams.get("resourceId");
@@ -281,12 +305,10 @@ async function loadPage(page, keyword=""){
   currentPage=page;
   grid.innerHTML='<div class="loading">📚 正在加载期刊列表...</div>';
   try{
-    const res=await fetch(\`/api/getResourcesWithCover?page=\${page}\`);
+    const res = await fetch("/api/getResourcesWithCover?page=" + page + "&keyword=" + encodeURIComponent(keyword || ""));
     const data=await res.json();
     let resources = data.resources;
     totalPages = data.totalPages;
-    
-    if(keyword) resources=resources.filter(item=>item.resourceName.includes(keyword));
 
     grid.innerHTML="";
     if(resources.length === 0) {
