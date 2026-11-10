@@ -1,17 +1,17 @@
 
-# 📚 博览数字资源导航站
+# 📚 博览期刊数字资源导航站
 
 [![Deploy to Cloudflare Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-基于 Cloudflare Workers 搭建的高性能、轻量级博览网（Bookan）数字资源代理与导航系统。项目采用前后端一体化单文件设计，内置现代化的响应式前端（Tailwind CSS），支持海量数字期刊、报纸的高效检索、多级分类筛选、往期追溯以及具备完美居中、鼠标滚轮缩放与全方位拖拽能力的沉浸式电子书阅读器。
+基于 Cloudflare Workers 搭建的高性能、轻量级博览期刊数字资源代理与导航系统。项目采用前后端一体化单文件设计，内置现代化的响应式前端（Tailwind CSS），支持海量数字期刊的高效检索、多级分类筛选、往期追溯以及具备完美居中、鼠标滚轮缩放与全方位拖拽能力的沉浸式电子书阅读器。
 
 ---
 
 ## ✨ 核心功能亮点
 
 - 🚀 **Serverless 零成本架构**：完全运行于 Cloudflare Workers 之上，无需购买和维护云服务器，享受全球 CDN 边缘加速。
-- 🛡️ **智能跨域代理 (CORS)**：自动拦截并代理博览网各类 API 请求，自动注入 User-Agent 与 Referer 伪装，完美突破浏览器的同源策略限制。
+- 🛡️ **智能跨域代理 (CORS)**：完美突破浏览器的同源策略限制。
 - 📂 **多级资源分类导航**：支持大类资源导航与子分类精准筛选，配备完善的动态分页、页码直接跳转及状态恢复机制。
 - 📅 **历年期数深度追溯**：支持查看期刊详细介绍、出版社信息、ISSN、历年出版列表以及具体到每一期的直达入口。
 - 📖 **沉浸式双模电子书阅读器**：
@@ -26,7 +26,7 @@
 
 | 模块 | 实现方式 | 核心职责 |
 | :--- | :--- | :--- |
-| **Worker 代理后端** | `export default { fetch(...) }` | 拦截特定的 API 路径（如 `(resource)`、`resource_categoryIssues`、`pastYearList`、`yearList`、`getHash` 等），加上合法请求头转发至博览网，并追加 `Access-Control-Allow-Origin: *` 返回。 |
+| **Worker 代理后端** | `export default { fetch(...) }` | 追加 `Access-Control-Allow-Origin: *` 返回。 |
 | **单页前端 (SPA)** | `HTML_CONTENT` 字符串 | 采用 Tailwind CSS 构建的高颜值现代化用户界面，负责分类选项卡渲染、瀑布流式资源展示、弹窗交互及 Canvas/Image 阅读器逻辑。 |
 
 ---
@@ -37,9 +37,9 @@
 
 1. 登录 [Cloudflare Dashboard](https://dash.cloudflare.com/)。
 2. 在左侧菜单栏选择 **Workers & Pages**，点击右上角 **Create application** -> **Create Worker**。
-3. 为您的 Worker 输入一个易于辨识的名称（例如 `bookan-navigator`），点击 **Deploy**。
+3. 为您的 Worker 输入一个易于辨识的名称（例如 `bl-navigator`），点击 **Deploy**。
 4. 部署成功后，点击 **Edit code** 进入在线代码编辑器。
-5. 清空编辑器原有内容，将项目的完整 `index.js` 代码粘贴进去。
+5. 清空编辑器原有内容，将项目的完整 `bl_worker.js` 代码粘贴进去。
 6. 点击右上角的 **Save and deploy** 即可保存并实时生效。
 
 ### 方法二：通过 Wrangler CLI 命令行部署
@@ -55,8 +55,8 @@ npm install -g wrangler
 **2. 在本地项目根目录下创建 `wrangler.toml` 配置文件：**
 
 ```toml
-name = "bookan-navigator"
-main = "index.js"
+name = "bl-navigator"
+main = "bl_worker.js"
 compatibility_date = "2026-01-01"
 ```
 
@@ -95,7 +95,7 @@ wrangler deploy
 
 ## 📄 免责声明
 
-本项目仅供个人学习、技术研究与交流使用。所有数据接口及资源均归原平台（博览网）所有，开发者不保证其永久可用性、完整性与准确性。请在使用时严格遵守相关法律法规，不得将其用于任何商业用途或恶意爬虫行为。
+本项目仅供个人学习、技术研究与交流使用。所有数据接口及资源均归版权商所有，开发者不保证其永久可用性、完整性与准确性。请在使用时严格遵守相关法律法规，不得将其用于任何商业用途或恶意爬虫行为。
 
 ---
 
