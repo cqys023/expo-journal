@@ -39,7 +39,7 @@
 2. 🧭 在左侧菜单栏选择 **Workers & Pages**，点击右上角 **Create application** -> **Create Worker**。
 3. 🏷️ 为您的 Worker 输入一个易于辨识的名称（例如 `bl-navigator`），点击 **Deploy**。
 4. 📝 部署成功后，点击 **Edit code** 进入在线代码编辑器。
-5. 📋 清空编辑器原有内容，将项目的完整 `bl_worker.js` 代码粘贴进去。
+5. 📋 清空编辑器原有内容，将项目的完整 `b_worker.js` 代码粘贴进去。
 6. 🚀 点击右上角的 **Save and deploy** 即可保存并实时生效。
 
 ### 💻 方法二：通过 Wrangler CLI 命令行部署
@@ -56,13 +56,13 @@ npm install -g wrangler
 
 ```toml
 name = "bl-navigator"
-main = "bl_worker.js"
+main = "b_worker.js"
 compatibility_date = "2026-01-01"
 ```
 
-**③ 📄 将主程序代码保存为 `bl_worker.js`。**
+**③ 📄 将主程序代码保存为 `b_worker.js`。**
 
-确保 `bl_worker.js` 和 `wrangler.toml` 位于同一个项目根目录。
+确保 `b_worker.js` 和 `wrangler.toml` 位于同一个项目根目录。
 
 **④ 🔐 登录 Cloudflare 并执行一键发布命令：**
 
