@@ -1,3 +1,4 @@
+
 # 📚 博览数字资源导航站
 
 [![Deploy to Cloudflare Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/)
@@ -34,7 +35,7 @@
 
 ### 方法一：通过 Cloudflare Workers 控制台部署（推荐）
 
-1. 登录 Cloudflare Dashboard。
+1. 登录 [Cloudflare Dashboard](https://dash.cloudflare.com/)。
 2. 在左侧菜单栏选择 **Workers & Pages**，点击右上角 **Create application** -> **Create Worker**。
 3. 为您的 Worker 输入一个易于辨识的名称（例如 `bookan-navigator`），点击 **Deploy**。
 4. 部署成功后，点击 **Edit code** 进入在线代码编辑器。
@@ -45,49 +46,59 @@
 
 如果你习惯本地开发或使用 CI/CD 流程：
 
-1. 全局安装 Cloudflare Wrangler 工具：
-   ```bash
-   npm install -g wrangler
-   在本地项目根目录下创建 wrangler.toml 配置文件：
+**1. 全局安装 Cloudflare Wrangler 工具：**
 
-Ini, TOML
+```bash
+npm install -g wrangler
+```
 
+**2. 在本地项目根目录下创建 `wrangler.toml` 配置文件：**
 
+```toml
 name = "bookan-navigator"
 main = "index.js"
 compatibility_date = "2026-01-01"
-将主程序代码保存为 index.js。
+```
 
-登录并执行一键发布命令：
+**3. 将主程序代码保存为 `index.js`。**
 
-Bash
+确保 `index.js` 和 `wrangler.toml` 位于同一个项目根目录。
 
+**4. 登录 Cloudflare 并执行一键发布命令：**
 
+```bash
 wrangler login
 wrangler deploy
-📖 详细使用说明
-资源检索与筛选：
+```
 
-打开部署好的 Cloudflare Worker 访问链接，页面会自动拉取机构下的数字资源大类。
+---
 
-点击顶部大类标签或下方的子分类，即可快速筛选不同方向的期刊、报纸。
+## 📖 详细使用说明
 
-查看刊物详情与往期：
+### 1. 资源检索与筛选
 
-点击任意一本刊物的封面卡片，会弹窗展示该资源的详细简介、出版社以及历年出版年份。
+- 打开部署好的 Cloudflare Worker 访问链接，页面会自动拉取机构下的数字资源大类。
+- 点击顶部大类标签或下方的子分类，即可快速筛选不同方向的期刊、报纸。
 
-点击不同的年份，下方将自动刷新出该年份对应的所有期数。
+### 2. 查看刊物详情与往期
 
-在线沉浸式阅读：
+- 点击任意一本刊物的封面卡片，会弹窗展示该资源的详细简介、出版社以及历年出版年份。
+- 点击不同的年份，下方将自动刷新出该年份对应的所有期数。
 
-点击具体某期后即可进入阅读器界面。
+### 3. 在线沉浸式阅读
 
-翻页操作：通过界面左右两侧的悬浮箭头或底部的控制栏进行翻页。
+- 点击具体某期后即可进入阅读器界面。
+- **翻页操作**：通过界面左右两侧的悬浮箭头或底部的控制栏进行翻页。
+- **自由缩放与拖拽**：在阅读过程中可随时利用鼠标滚轮放大/缩小细节，按住鼠标左键即可任意平移拖拽无死角阅读。
 
-自由缩放与拖拽：在阅读过程中可随时利用鼠标滚轮放大/缩小细节，按住鼠标左键即可任意平移拖拽无死角阅读。
+---
 
-📄 免责声明
+## 📄 免责声明
+
 本项目仅供个人学习、技术研究与交流使用。所有数据接口及资源均归原平台（博览网）所有，开发者不保证其永久可用性、完整性与准确性。请在使用时严格遵守相关法律法规，不得将其用于任何商业用途或恶意爬虫行为。
 
-📝 License
-基于 MIT License 开源协议发布。
+---
+
+## 📝 License
+
+基于 [MIT License](LICENSE) 开源协议发布。
