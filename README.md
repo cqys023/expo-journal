@@ -3,7 +3,7 @@
 [![Deploy to Cloudflare Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-基于 **Cloudflare Workers** 搭建的高性能、轻量级博览网（Bookan）数字资源代理与导航系统。
+基于 **Cloudflare Workers** 搭建的高性能、轻量级博览网数字资源代理与导航系统。
 
 ---
 
