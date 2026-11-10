@@ -1,11 +1,9 @@
-# expo-journal博览期刊网站源码搭建说明
+# 📚 博览数字资源导航站
 
-**项目简介：** 本项目提供一个可自建的 **博览期刊在线下载网站**，实现期刊搜索、年份筛选、自动下载的功能。  
-网站静态托管于 **Cloudflare Workers**，数据存储使用 **Cloudflare D1 数据库**。
+[![Deploy to Cloudflare Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-**示例站点（教程中的演示效果）** **[博览期刊示例网站](https://bk.feifanlib.fun/)**。
-
-**本源码搭建视频教程**  **[利用cloudflare免费搭建一个期刊、杂志网站！](https://www.youtube.com/watch?v=d5QXvlYiu2s)**。
+基于 **Cloudflare Workers** 搭建的高性能、轻量级博览网（Bookan）数字资源代理与导航系统。
 
 ---
 
@@ -16,129 +14,36 @@
 - **首页展示期刊列表**
 - 支持 **按名称搜索**
 - 支持 **翻页 / 跳转页面**
-- 点击期刊后自动打开新页面加载**对应年份**
-- 选择年份后自动加载**该年份下的全部期刊**
-- 点击任意一期，即可**触发下载程序**，并在浏览器弹出保存窗口
-- 下载完成后可直接**本地查看电子期刊**
-
-原本计划加入封面展示，但由于加载速度因素，最终选择仅展示文字列表以提高整体体验。
+- **多级分类导航**：支持大类与子分类快速筛选
+- **历年期数追溯**：支持查看期刊详细介绍、历年出版列表及往期期数
+- **沉浸式双模阅读器**：支持双页对照、单页独占放大、鼠标滚轮无极缩放及全方向无死角拖拽平移
 
 ---
 
-## 📦 项目结构说明
+## 🛠️ 项目架构
 
-GitHub 仓库中包含 3 个文件：
-
-
-其中：
-
-- **bk-worker.js** → Worker 部署使用代码文件  
-- **bk_info.sql / bk_years.sql** → 需在 Cloudflare D1 中分别创建数据库并导入数据
+本项目采用纯单文件（Single-File）方案实现前后端一体化：
+1. **Worker 代理后端**：拦截并代理博览网各类 API 请求，自动注入 `User-Agent` 与 `Referer`，完美解决跨域（CORS）问题。
+2. **单页前端 (SPA)**：采用 Tailwind CSS 构建的高颜值现代化用户界面。
 
 ---
 
-## 🚀 搭建部署教程
+## 🚀 快速部署指南
 
-下面是完整的部署步骤，按顺序执行即可成功搭建属于自己的网站。
-
----
-
-### 1️⃣ 克隆仓库并准备 SQL 文件
-
-1. 打开 GitHub 仓库  
-2. **点亮 Starred 支持作者**  
-3. 可选择 Fork 项目到自己的仓库  
-4. 下载两个 SQL 文件：  
-   - `bk_info.sql.sql`  
-   - `bk_years.sql`  
-5. `bk-worker.js` 可不用下载，稍后在 Cloudflare 里直接复制粘贴即可
+1. 登录 [Cloudflare Dashboard](https://dash.cloudflare.com/)。
+2. 进入 **Workers & Pages** -> 点击 **Create application** -> **Create Worker**。
+3. 输入 Worker 名称并点击 **Deploy**。
+4. 部署成功后点击 **Edit code**，将项目的完整代码粘贴进去。
+5. 点击右上角 **Save and deploy** 即可发布生效。
 
 ---
 
-### 2️⃣ 创建 Cloudflare 账号（如无跳过）
+## 📄 免责声明
 
-1. 访问 **[Cloudflare](https://dash.cloudflare.com/)** 官网  
-2. 使用邮箱免费注册账号   
-3. 登录账号进入 Cloudflare 控制台
+本项目仅供个人学习、技术研究与交流使用。所有数据接口及资源均归原平台所有，请遵守相关法律法规。
 
 ---
 
-### 3️⃣ 创建 Cloudflare D1 数据库
+## 📝 License
 
-1. 左侧导航选择：**存储和数据库 → D1 数据库**  
-2. 点击右上角 **创建数据库**  
-3. 数据库名称建议与 SQL 文件保持一致，如：  
-   - `bk_info`  
-   - `bk_years`
-
----
-
-### 4️⃣ 导入 SQL 数据到 D1
-
-1. 在 D1 数据库列表中选择创建好的数据库  
-2. 点击 **控制台**  
-3. 打开本地 `bk_info.sql`  
-4. 将 SQL 文件中的数据分段复制粘贴到控制台执行  
-
-⚠️ 注意事项：
-
-- 数据库内数据量较大，可能需要分批复制执行
-- 每一段都必须保留 `INSERT INTO ******* VALUES ` 这行语句  
-- 每次分段的末尾逗号 **","** 必须改为英文引号 **";"** 
-- 执行成功会输出成功提示  
-
-完成 `bk_info.sql` 数据导入后，用同样方式导入 `bk_years.sql`的数据。
-
----
-
-### 5️⃣ 创建 Cloudflare Worker 并部署
-
-1. 左侧导航进入 **计算和 AI → Workers 和 Pages**  
-2. 点击右上角 **创建应用程序**  
-3. 选择 **从 Hello World 开始**  
-4. Worker 名称可随意填写  
-5. 创建后选择 **编辑代码**  
-6. 回到 GitHub 仓库打开 `bk-worker.js`  
-7. 将全部代码复制 → 粘贴到 Cloudflare Worker 界面  
-8. 点击右上角 **部署**
-
----
-
-### 6️⃣ 绑定数据库到 Worker
-
-1. 在 Worker 面板点击 **设置 → 变量与绑定**  
-2. 新建绑定：  
-   - 类型选择 **D1 Database**  
-   - 变量名建议与数据库名一致，如：  
-     - `bk_info`  
-     - `bk_years`  
-   - 选择对应的数据库实例  
-
-绑定完成后再次部署即可。
-
----
-
-### 7️⃣ 访问网站
-
-Cloudflare 会自动生成一个默认访问地址，例如：https://your-worker-name.username.workers.dev/
-
-
-你可以：
-
-- 直接使用默认域名访问  
-- 如果已有绑定到 Cloudflare 的自有域名，可绑定 Worker 实现自定义访问  
-  **且自有域名不受国内网络限制**
-
----
-
-## 🎉 恭喜
-
-网站至此已部署成功，您可以自由使用自己的期刊站点。  
-如果**本源码**对您有帮助，非常感谢您点赞、订阅或 Starred 支持！
-
----
-
-## 📄 License
-
-本项目可自由参考使用，具体以仓库 License 为准。
-
+基于 [MIT License](LICENSE) 开源协议发布。
